@@ -34,9 +34,9 @@ limit 3;
     
 select authors.au_id, au_fname, au_lname, title, COALESCE(SUM(qty), 0) as total
 from authors
-join titleauthor on authors.au_id = titleauthor.au_id
-join titles on titleauthor.title_id = titles.title_id
-join sales on titles.title_id = sales.title_id
+left join titleauthor on authors.au_id = titleauthor.au_id
+left join titles on titleauthor.title_id = titles.title_id
+left join sales on titles.title_id = sales.title_id
 group by au_id , title
 order by total desc; -- No hay ninguno que tenga 0. 
 
