@@ -39,14 +39,14 @@ SELECT authors.au_id, authors.au_lname, authors.au_fname, MAX(sales.qty) AS titl
 	LIMIT 3;
     
 -- Challenge 4. Best Selling Authors Ranking
-SELECT authors.au_id, authors.au_lname, authors.au_fname, MAX(sales.qty) AS title
+SELECT authors.au_id, authors.au_lname, authors.au_fname, COALESCE(MAX(sales.qty),0) AS TOTAL
 	FROM sales 
-		RIGHT JOIN titles 
+		JOIN titles 
 			ON sales.title_id = titles.title_id
-		RIGHT JOIN titleauthor 
+		JOIN titleauthor 
 			ON titleauthor.title_id = titles.title_id    
 		RIGHT JOIN authors 
 			ON authors.au_id = titleauthor.au_id   
 	GROUP BY authors.au_id, authors.au_lname, authors.au_fname
-    ORDER BY title ASC
-	LIMIT 25;
+    ORDER BY TOTAL DESC
+	LIMIT 23;
